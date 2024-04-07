@@ -1,0 +1,19 @@
+{
+    "name": "milto/gastos",
+    "authors": [
+        {
+            "name": "AyalaTon",
+            "email": "88519142+AyalaTon@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "monolog/monolog": "^1.17",
+        "phpmailer/phpmailer": "^6.1",
+        "slim/php-view": "^2.0",
+        "slim/slim": "^3.1",
+        "slim/twig-view": "^2.5",
+        "twbs/bootstrap": "^4.3",
+        "twig/extensions": "*"
+    }
+}
