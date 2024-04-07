@@ -9,7 +9,7 @@ class ctr_user{
 		$userClass = new user();
 		$response = new \stdClass();
 
-		$responseGetUser = $userClass->getUserByEmail($user); // MODIFIED
+		$responseGetUser = $userClass->getUserByUser($user); // MODIFIED
 		// return json_encode($responseGetUser->message);
 		if($responseGetUser->result == 2){
 			if(is_null($responseGetUser->objectResult->pass)){ // Si la Respuesta de GetUserByEmail devuelve una Pass vacia, seteo la que envie
@@ -69,18 +69,6 @@ class ctr_user{
             $response->usuario->pass = "";
             $response->usuario->token = "";
         }else return $responseGetUserInfo;
-        return $response;
-	}
-
-	public function updateUserMail($idUser, $email){
-		$userClass = new user();
-		$response = new \stdClass();
-		
-		$responseUpdateMail = $userClass->updateUserMail($idUser, $email);
-		if($responseUpdateMail->result == 2){ // Ahora deberia crear el txt
-            $response->result = 2;
-            $response->message = "Email actualizado con éxito!";
-        }else return $responseUpdateMail;
         return $response;
 	}
 }
