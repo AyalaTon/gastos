@@ -13,6 +13,7 @@ return function (App $app) {
     $routesA($app);
 
     $app->get('/', function ($request, $response, $args) use ($container) {
+        $args['version'] = '?'.LASTUPDATE;
         return $this->view->render($response, "index.twig", $args);
     })->setName("Home");
 };
