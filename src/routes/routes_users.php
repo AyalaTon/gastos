@@ -26,19 +26,18 @@ return function (App $app){
 	// 	$args['version'] = '?'.LASTUPDATE;
 	// 	return $this->view->render($response, "test.twig", $args);
 	// })->setName("Test");
-	// $app->get('/test', function(Request $request, Response $response) use ($container, $userController){
-	// 	$data = $request->getParams();
-	// 	// var_dump($data);
-	// 	$user = $data['user'];
-	// 	$password = $data['password'];
+	$app->post('/login', function(Request $request, Response $response) use ($container, $userController){
+		$data = $request->getParams();
+		$user = $data['user'];
+		$password = $data['password'];
 		
-	// 	$response_data = [
-	// 		'user' => $user,
-	// 		'password' => $password
-	// 	];
+		$response_data = [
+			'user' => $user,
+			'password' => $password
+		];
 
-	// 	return json_encode($response_data);
-	// });
+		return json_encode($response_data);
+	});
 
 }
 ?>
