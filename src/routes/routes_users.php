@@ -11,13 +11,34 @@ return function (App $app){
 	$userController = new ctr_user();
 
 	$app->post('/signIn', function(Request $request, Response $response) use ($container, $userController){
-		// $responseCurrentSession = $userController->validateCurrentSession();
-		// if($responseCurrentSession->result != 2){ // No hay sesion activa
-			$data = $request->getParams();
-			$user = $data['user'];
-			$password = $data['password'];
-			return json_encode($userController->signIn($user, sha1($password)));
-		// }else return json_encode($responseCurrentSession);
+		$data = $request->getParams();
+		$user = $data['user'];
+		$password = $data['password'];
+		return json_encode($userController->signIn($user, sha1($password)));
 	});
+	
+	$app->get('/test', function ($request, $response, $args) use ($container) {
+        $args['version'] = '?'.LASTUPDATE;
+		return $this->view->render($response, "test.twig", $args);
+	})->setName("Test");
+	
+	// $app->get('/test', function ($request, $response, $args) use ($container, $userController) {
+	// 	$args['version'] = '?'.LASTUPDATE;
+	// 	return $this->view->render($response, "test.twig", $args);
+	// })->setName("Test");
+	// $app->get('/test', function(Request $request, Response $response) use ($container, $userController){
+	// 	$data = $request->getParams();
+	// 	// var_dump($data);
+	// 	$user = $data['user'];
+	// 	$password = $data['password'];
+		
+	// 	$response_data = [
+	// 		'user' => $user,
+	// 		'password' => $password
+	// 	];
+
+	// 	return json_encode($response_data);
+	// });
+
 }
 ?>
