@@ -20,37 +20,7 @@ class DataBase {
 
 		$connection = $dbClass->connection();
 		if($connection){
-			if ($tipoRetorno == "MULTIPLE_QUERY") { // For multiquerys like UPDATE and SELECT | Only for OBJECT return | Created only to get lastFactura from Empresa
-				// $paramsQuery1 = array();
-				// $paramsQuery2 = array();
-
-				$sqls = explode(";", $sql);
-				$sqls[0]; // Update
-				$sqls[1]; // Select
-				$connection->begin_transaction();
-				$query1 = $connection->prepare($sqls[0]);
-				$query1->bind_param("i", $params[1]);
-				$query1->execute();
-				$query1->close();
-			
-				$query2 = $connection->prepare($sqls[1]);
-				$query2->bind_param("i", $params[2]);
-				$query2->execute();
-				$result = $query2->get_result();
-				$objectResult = $result->fetch_object();
-			
-				if (!is_null($objectResult)) {
-					$response->result = 2;
-					$response->objectResult = $objectResult;
-				} else {
-					$response->result = 1;
-				}
-			
-				$query2->close();
-				$connection->commit();
-			} else {
 				$query = $connection->prepare($sql);
-
 				$paramsTemp = array();
 				if($params){
 					foreach($params as $key => $value)
@@ -96,7 +66,6 @@ class DataBase {
 						$response->message = "BASE DE DATOS: " . $query->error;
 					}
 				}
-			}
 		}else{
 			$response->result = 0;
 			$response->message = "Ocurrió un error y no se pudo acceder a la base de datos del sistema.";
