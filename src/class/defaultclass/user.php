@@ -31,15 +31,15 @@ class user{
 	public function getUserById($idUser){
 		$dbClass = new DataBase();
 		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE id = ?", array('i', $idUser), "OBJECT");
-		var_dump($responseQuery);
+		// var_dump($responseQuery);
 		if($responseQuery->result == 1)
 			$responseQuery->message = "El identificador ingresado no corresponde a un usuario registrado.";
 		return $responseQuery;
 	}
 	public function getUserByUser($user){
 		$dbClass = new DataBase();
-		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE user = ?", array('i', $idUser), "OBJECT");
-		var_dump($responseQuery);
+		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE user = ?", array('i', (int)$idUser), "OBJECT");
+		// var_dump($responseQuery);
 		if($responseQuery->result == 1)
 			$responseQuery->message = "El identificador ingresado no corresponde a un usuario registrado.";
 		return $responseQuery;
