@@ -35,6 +35,27 @@ class DataBase {
 				if ($query->execute()) {
 					$result = $query->get_result();
 					// Rest of your code for handling result
+					$result = $query->get_result();
+					
+					if($tipoRetorno == "LIST"){
+						$arrayResult = array();
+						while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+							$arrayResult[] = $row;
+						}
+						if(sizeof($arrayResult) > 0){
+							$response->result = 2;
+							$response->listResult = $arrayResult;
+						} else $response->result = 1;
+					} else if($tipoRetorno == "OBJECT") {
+						$objectResult = $result->fetch_object();
+						if(!is_null($objectResult)){
+							$response->result = 2;
+							$response->objectResult = $objectResult;
+						} else $response->result = 1;
+					}else if($tipoRetorno == "BOOLE"){
+						$response->result = 2;
+						$response->id = $connection->insert_id;
+					}
 				} else {
 					// Handle execution error
 					$response->result = 0;
