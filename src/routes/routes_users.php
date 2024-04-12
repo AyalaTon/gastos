@@ -14,6 +14,8 @@ return function (App $app){
 		$data = $request->getParams();
 		$user = $data['user'];
 		$password = $data['password'];
+		var_dump($user);
+		var_dump($password);
 		return json_encode($userController->signIn($user, sha1($password)));
 	});
 	

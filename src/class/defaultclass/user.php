@@ -39,7 +39,7 @@ class user{
 	public function getUserByUser($user){
 		$dbClass = new DataBase();
 		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE user = ?", array('s', $user), "OBJECT");
-		var_dump($responseQuery);
+		// var_dump($responseQuery);
 		if($responseQuery->result == 1)
 			$responseQuery->message = "El identificador ingresado no corresponde a un usuario registrado.";
 		return $responseQuery;
