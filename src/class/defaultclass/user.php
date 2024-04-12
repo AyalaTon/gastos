@@ -14,10 +14,8 @@ class user{
 		$responseQuery = $dbClass->sendQuery('UPDATE usuario SET token = ? WHERE id = ?', array('si', $newToken, $idUser), "BOOLE");
 		if($responseQuery->result == 2){
 			$responseQuery = null;
-			// $responseQuery = user::getUserById($idUser);
-			$responseQuery = user::getUserAndEmpresaById($idUser);
+			$responseQuery = $this->getUserById($idUser);
 			if($responseQuery->result == 2){
-				$responseQuery2 = user::getDebitosById($responseQuery->objectResult->idEmpresa);
 				if($responseQuery2->result == 2){
 					$objectSession = new \stdClass();
 					$objectSession->idUser = $responseQuery->objectResult->id;
