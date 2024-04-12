@@ -33,6 +33,7 @@ class user{
 		// Convert $idUser to integer if needed
 		$idUser = (int) $idUser;
 		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE id = ?", array('i', $idUser), "OBJECT");
+		var_dump($responseQuery);
 		if($responseQuery->result == 1)
 			$responseQuery->message = "El identificador ingresado no corresponde a un usuario registrado.";
 		return $responseQuery;
