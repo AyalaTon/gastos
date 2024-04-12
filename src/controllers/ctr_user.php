@@ -9,7 +9,7 @@ class ctr_user{
 		$response = new \stdClass();
 
 		$responseGetUser = $userClass->getUserByUser($user); // MODIFIED
-		// var_dump($responseGetUser);
+		var_dump($responseGetUser);
 		exit;
 		// return json_encode($responseGetUser->message);
 		if($responseGetUser->result == 2){
