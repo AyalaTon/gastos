@@ -23,11 +23,15 @@ class DataBase {
 				echo "Connection";
 				$query = $connection->prepare($sql);
 				$paramsTemp = array();
-				if($params){
-					foreach($params as $key => $value)
-						$paramsTemp[$key] = &$params[$key];
-
-					call_user_func_array(array($query, 'bind_param'), $paramsTemp);
+				if ($params) {
+					$types = "";
+					$bindParams = array();
+					foreach ($params as $value) {
+						$types .= is_int($value) ? "i" : (is_double($value) ? "d" : (is_string($value) ? "s" : "b"));
+						$bindParams[] = &$value;
+					}
+					array_unshift($bindParams, $types);
+					call_user_func_array(array($query, 'bind_param'), $bindParams);
 				}
 				var_dump($query);
 				if($query->execute()){

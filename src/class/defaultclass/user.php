@@ -30,6 +30,8 @@ class user{
 	}
 	public function getUserById($idUser){
 		$dbClass = new DataBase();
+		// Convert $idUser to integer if needed
+		$idUser = (int) $idUser;
 		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE id = ?", array('i', $idUser), "OBJECT");
 		if($responseQuery->result == 1)
 			$responseQuery->message = "El identificador ingresado no corresponde a un usuario registrado.";
