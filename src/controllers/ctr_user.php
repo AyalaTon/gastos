@@ -5,7 +5,6 @@ require_once '../src/class/defaultclass/user.php';
 class ctr_user{
 	/* INICIAR SESIÓN: En caso del usuario no tener contraseña le asigna la ingresada y se guarda un objeto en sesion (usuario, token)*/
 	public function signIn($user, $password){
-		$historyClass = new history();
 		$userClass = new user();
 		$response = new \stdClass();
 
@@ -15,12 +14,10 @@ class ctr_user{
 			if(is_null($responseGetUser->objectResult->pass)){ // Si la Respuesta de GetUserByEmail devuelve una Pass vacia, seteo la que envie
 				$responseUpdatePassword = $userClass->updateUserPassword($responseGetUser->objectResult->id, $password);
 				if($responseUpdatePassword->result == 2){
-					$responseLogin = $historyClass->newLogin($responseGetUser->objectResult->id); // Guardo en el historial el login y no me interesa la respuesta
 					return $userClass->setNewTokenAndSession($responseGetUser->objectResult->id);
 				}else return $responseUpdatePassword;
 			} else {
 				if(strcmp($password, $responseGetUser->objectResult->pass) == 0){
-					$responseLogin = $historyClass->newLogin($responseGetUser->objectResult->id); // Guardo en el historial el login y no me interesa la respuesta
 					return $userClass->setNewTokenAndSession($responseGetUser->objectResult->id);
 				} else {
 					$response->result = 0;
