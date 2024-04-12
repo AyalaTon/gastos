@@ -21,23 +21,5 @@ return function (App $app){
         $args['version'] = '?'.LASTUPDATE;
 		return $this->view->render($response, "test.twig", $args);
 	})->setName("Test");
-	
-	// $app->get('/test', function ($request, $response, $args) use ($container, $userController) {
-	// 	$args['version'] = '?'.LASTUPDATE;
-	// 	return $this->view->render($response, "test.twig", $args);
-	// })->setName("Test");
-	$app->post('/login', function(Request $request, Response $response) use ($container, $userController){
-		$data = $request->getParams();
-		$user = $data['user'];
-		$password = $data['password'];
-		
-		$response_data = [
-			'user' => $user,
-			'password' => $password
-		];
-
-		return json_encode($response_data);
-	});
-
 }
 ?>
