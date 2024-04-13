@@ -28,43 +28,49 @@ class DataBase {
 
 				call_user_func_array(array($query, 'bind_param'), $paramsTemp);
 			}
-			var_dump($query);
-			if($query->execute()){
-				$result = $query->get_result();
-				
-				if($tipoRetorno == "LIST"){
-					$arrayResult = array();
-					while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-						$arrayResult[] = $row;
-					}
-					if(sizeof($arrayResult) > 0){
-						$response->result = 2;
-						$response->listResult = $arrayResult;
-					} else $response->result = 1;
-				} else if($tipoRetorno == "OBJECT") {
-					$objectResult = $result->fetch_object();
-					if(!is_null($objectResult)){
-						$response->result = 2;
-						$response->objectResult = $objectResult;
-					} else $response->result = 1;
-				}else if($tipoRetorno == "BOOLE"){
-					$response->result = 2;
-					$response->id = $connection->insert_id;
-				}
-			} else {
+			if (!$query) {
+				// Check for errors
+				var_dump($connection->error);
 				$response->result = 0;
-				if(strpos($query->error, "Duplicate") !== false) {
-					$msjError = $query->error;
-					$msjError = str_replace("Duplicate entry", "BASE DE DATOS: El valor ", $msjError);
-					$msjError = str_replace(" for key", " ya fue ingresado previamente para el campo ", $msjError);
-					$response->message = $msjError . "(dato único)";
-				} else if(strpos($query->error, "Column") !== false) {
-					$msjError = $query->error;
-					$msjError = str_replace("Column", "BASE DE DATOS: La columna", $msjError);
-					$msjError = str_replace("cannot be", "no puede ser", $msjError);
-					$response->message = $msjError;
+				$response->message = "Error preparing SQL statement: " . $connection->error;
+			} else {
+				if($query->execute()){
+					$result = $query->get_result();
+					
+					if($tipoRetorno == "LIST"){
+						$arrayResult = array();
+						while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+							$arrayResult[] = $row;
+						}
+						if(sizeof($arrayResult) > 0){
+							$response->result = 2;
+							$response->listResult = $arrayResult;
+						} else $response->result = 1;
+					} else if($tipoRetorno == "OBJECT") {
+						$objectResult = $result->fetch_object();
+						if(!is_null($objectResult)){
+							$response->result = 2;
+							$response->objectResult = $objectResult;
+						} else $response->result = 1;
+					}else if($tipoRetorno == "BOOLE"){
+						$response->result = 2;
+						$response->id = $connection->insert_id;
+					}
 				} else {
-					$response->message = "BASE DE DATOS: " . $query->error;
+					$response->result = 0;
+					if(strpos($query->error, "Duplicate") !== false) {
+						$msjError = $query->error;
+						$msjError = str_replace("Duplicate entry", "BASE DE DATOS: El valor ", $msjError);
+						$msjError = str_replace(" for key", " ya fue ingresado previamente para el campo ", $msjError);
+						$response->message = $msjError . "(dato único)";
+					} else if(strpos($query->error, "Column") !== false) {
+						$msjError = $query->error;
+						$msjError = str_replace("Column", "BASE DE DATOS: La columna", $msjError);
+						$msjError = str_replace("cannot be", "no puede ser", $msjError);
+						$response->message = $msjError;
+					} else {
+						$response->message = "BASE DE DATOS: " . $query->error;
+					}
 				}
 			}
 		}else{
