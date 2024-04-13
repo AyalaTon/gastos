@@ -21,6 +21,8 @@ class DataBase {
 		$connection = $dbClass->connection();
 		if($connection){
 			$query = $connection->prepare($sql);
+			var_dump($sql); // Check the SQL statement
+			var_dump($params); // Check the parameters
 			$paramsTemp = array();
 			if($params){
 				foreach($params as $key => $value)
