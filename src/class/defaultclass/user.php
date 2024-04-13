@@ -8,6 +8,7 @@ class user{
 		$dbClass = new DataBase();
 		return $dbClass->sendQuery("UPDATE usuario SET pass = ? WHERE id = ?", array('si', $newPassword, $idUser), "BOOLE");
 	}
+
 	public function setNewTokenAndSession($idUser){
 		$dbClass = new DataBase();
 		$newToken = bin2hex(random_bytes((100 - (100 % 2)) / 2));
@@ -16,18 +17,43 @@ class user{
 			$responseQuery = null;
 			$responseQuery = $this->getUserById($idUser);
 			if($responseQuery->result == 2){
-				if($responseQuery2->result == 2){
-					$objectSession = new \stdClass();
-					$objectSession->idUser = $responseQuery->objectResult->id;
-					$objectSession->nick = $responseQuery->objectResult->user;
-					$objectSession->token = $responseQuery->objectResult->token;
-					$_SESSION['userSession'] = $objectSession;
-					unset($responseQuery->objectResult);
-				}
+				$objectSession = new \stdClass();
+				$objectSession->idUser = $responseQuery->objectResult->id;
+				$objectSession->nick = $responseQuery->objectResult->user;
+				$objectSession->token = $responseQuery->objectResult->token;
+				$_SESSION['userSession'] = $objectSession;
+				unset($responseQuery->objectResult);
 			}
-		}else $responseQuery->message = "Un error interno no permitio iniciar sesión con este usuario.";
+		} else $responseQuery->message = "Un error interno no permitio iniciar sesión con este usuario.";
 		return $responseQuery;
 	}
+
+	public function validateCurrentSession(){
+		$userClass = new users();
+		$response = new \stdClass();
+
+		if(isset($_SESSION['userSession'])){
+			$currentSession = $_SESSION['userSession'];
+			$responseGetUser = $userClass->getUserById($currentSession->idUser);
+			if($responseGetUser->result == 2){
+				if(strcmp($currentSession->token, $responseGetUser->objectResult->token) == 0){
+					$response->result = 2;
+					$response->currentSession = $currentSession;
+				} else {
+					$response->result = 0;
+					$response->message = "La sesión del caducó, por favor vuelva a ingresar.";
+				}
+			} else {
+				$response->result = 0;
+				$response->message = "La sesión no es valida, por favor vuelva a ingresar.";
+			}
+		} else {
+			$response->result = 0;
+			$response->message = "Actulamente no hay una sesión activa en el sistema.";
+		}
+		return $response;
+	}
+
 	public function getUserById($idUser){
 		$dbClass = new DataBase();
 		$responseQuery = $dbClass->sendQuery("SELECT * FROM usuario WHERE id = ?", array('i', $idUser), "OBJECT");

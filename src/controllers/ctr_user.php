@@ -8,14 +8,12 @@ class ctr_user{
 		$userClass = new user();
 		$response = new \stdClass();
 		$responseGetUser = $userClass->getUserByUser($user); // MODIFIED
-		var_dump($responseGetUser);
-		exit;
 		if($responseGetUser->result == 2){
 			if(is_null($responseGetUser->objectResult->pass)){ // Si la Respuesta de GetUserByEmail devuelve una Pass vacia, seteo la que envie
 				$responseUpdatePassword = $userClass->updateUserPassword($responseGetUser->objectResult->id, $password);
 				if($responseUpdatePassword->result == 2){
 					return $userClass->setNewTokenAndSession($responseGetUser->objectResult->id);
-				}else return $responseUpdatePassword;
+				} else return $responseUpdatePassword;
 			} else {
 				if(strcmp($password, $responseGetUser->objectResult->pass) == 0){
 					return $userClass->setNewTokenAndSession($responseGetUser->objectResult->id);
@@ -40,15 +38,15 @@ class ctr_user{
 				if(strcmp($currentSession->token, $responseGetUser->objectResult->token) == 0){
 					$response->result = 2;
 					$response->currentSession = $currentSession;
-				}else{
+				} else {
 					$response->result = 0;
 					$response->message = "La sesión del usuario caducó por favor vuelva a ingresar.";
 				}
-			}else{
+			} else {
 				$response->result = 0;
 				$response->message = "La sesión detectada no es valida, por favor vuelva a ingresar.";
 			}
-		}else{
+		} else {
 			$response->result = 0;
 			$response->message = "Actulamente no hay una sesión activa en el sistema.";
 		}
@@ -65,7 +63,7 @@ class ctr_user{
             $response->usuario = $responseGetUserInfo->objectResult;
             $response->usuario->pass = "";
             $response->usuario->token = "";
-        }else return $responseGetUserInfo;
+        } else return $responseGetUserInfo;
         return $response;
 	}
 }
