@@ -20,6 +20,8 @@ class DataBase {
 		
 		$connection = $dbClass->connection();
 		if ($connection) {
+			var_dump($sql);
+			var_dump($params);
 			$query = $connection->prepare($sql);
 			if ($params) {
 				$types = "";
