@@ -10,12 +10,12 @@ return function (App $app){
 	$container = $app->getContainer();
 	$userController = new ctr_user();
 
-	$app->post('/signIn', function(Request $request, Response $response) use ($container, $userController){
+	$app->post('/signIn', function(Request $request, Response $response) use ($userController){
 		$data = $request->getParams();
 		$user = $data['user'];
 		$password = $data['password'];
-		var_dump($user);
-		var_dump($password);
+		// var_dump($user);
+		// var_dump($password);
 		return json_encode($userController->signIn($user, sha1($password)));
 	});
 	
