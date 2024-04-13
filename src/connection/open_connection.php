@@ -28,6 +28,7 @@ class DataBase {
 
 				call_user_func_array(array($query, 'bind_param'), $paramsTemp);
 			}
+			var_dump($query);
 			if($query->execute()){
 				$result = $query->get_result();
 				
