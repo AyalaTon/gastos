@@ -8,6 +8,8 @@ class ctr_user{
 		$userClass = new user();
 		$response = new \stdClass();
 		$responseGetUser = $userClass->getUserByUser($user); // MODIFIED
+		var_dump($responseGetUser);
+		exit;
 		if($responseGetUser->result == 2){
 			if(is_null($responseGetUser->objectResult->pass)){ // Si la Respuesta de GetUserByEmail devuelve una Pass vacia, seteo la que envie
 				$responseUpdatePassword = $userClass->updateUserPassword($responseGetUser->objectResult->id, $password);
