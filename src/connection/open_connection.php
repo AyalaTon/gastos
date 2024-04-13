@@ -23,44 +23,51 @@ class DataBase {
 			var_dump($sql);
 			var_dump($params);
 			$query = $connection->prepare($sql);
-			if ($params) {
-				$types = "";
-				$bindParams = array();
-				foreach ($params as $value) {
-					$types .= is_int($value) ? "i" : (is_double($value) ? "d" : (is_string($value) ? "s" : "b"));
-					$bindParams[] = &$value;
-				}
-				array_unshift($bindParams, $types);
-				call_user_func_array(array($query, 'bind_param'), $bindParams);
-			}
-			if ($query->execute()) {
-				$result = $query->get_result();
-				// Rest of your code for handling result
-				$result = $query->get_result();
-				
-				if($tipoRetorno == "LIST"){
-					$arrayResult = array();
-					while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-						$arrayResult[] = $row;
+			if ($query) {
+				// Execute the query
+				if ($params) {
+					$types = "";
+					$bindParams = array();
+					foreach ($params as $value) {
+						$types .= is_int($value) ? "i" : (is_double($value) ? "d" : (is_string($value) ? "s" : "b"));
+						$bindParams[] = &$value;
 					}
-					if(sizeof($arrayResult) > 0){
+					array_unshift($bindParams, $types);
+					call_user_func_array(array($query, 'bind_param'), $bindParams);
+				}
+				if ($query->execute()) {
+					$result = $query->get_result();
+					// Rest of your code for handling result
+					$result = $query->get_result();
+					
+					if($tipoRetorno == "LIST"){
+						$arrayResult = array();
+						while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+							$arrayResult[] = $row;
+						}
+						if(sizeof($arrayResult) > 0){
+							$response->result = 2;
+							$response->listResult = $arrayResult;
+						} else $response->result = 1;
+					} else if($tipoRetorno == "OBJECT") {
+						$objectResult = $result->fetch_object();
+						if(!is_null($objectResult)){
+							$response->result = 2;
+							$response->objectResult = $objectResult;
+						} else $response->result = 1;
+					}else if($tipoRetorno == "BOOLE"){
 						$response->result = 2;
-						$response->listResult = $arrayResult;
-					} else $response->result = 1;
-				} else if($tipoRetorno == "OBJECT") {
-					$objectResult = $result->fetch_object();
-					if(!is_null($objectResult)){
-						$response->result = 2;
-						$response->objectResult = $objectResult;
-					} else $response->result = 1;
-				}else if($tipoRetorno == "BOOLE"){
-					$response->result = 2;
-					$response->id = $connection->insert_id;
+						$response->id = $connection->insert_id;
+					}
+				} else {
+					// Handle execution error
+					$response->result = 0;
+					$response->message = "Execution error: " . $connection->error;
 				}
 			} else {
-				// Handle execution error
+				// Handle prepare error
 				$response->result = 0;
-				$response->message = "Execution error: " . $connection->error;
+				$response->message = "Prepare error: " . $connection->error;
 			}
 		} else {
 			// Handle connection error
