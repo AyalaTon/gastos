@@ -21,6 +21,7 @@ class DataBase {
 		$connection = $dbClass->connection();
 		if($connection){
 			$query = $connection->prepare($sql);
+			var_dump($connection->error);
 			var_dump($sql); // Check the SQL statement
 			var_dump($params); // Check the parameters
 			$paramsTemp = array();
