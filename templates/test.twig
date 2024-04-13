@@ -4,10 +4,16 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <h1>CONTROL DE GASTOS DEL HOGAR <br>
-        TEST PAGE</h1>
-        <img src="{{ path_for('Home') }}img/image2.png" />
-        <a href="{{ path_for('Home') }}" title="IR A PAGINA PRINCIPAL"> HOME </a>
-
+        <div class="h1">
+            <h1>CONTROL DE GASTOS DEL HOGAR <br>
+            TEST PAGE</h1>
+        </div>
+        <div class="img" style="text-align:center;">
+            <img src="{{ path_for('Home') }}img/image2.png" />
+        </div>
+        <div class="routes" style="display: flex; justify-content: center">
+            <a href="{{ path_for('Home') }}" title="IR A PAGINA PRINCIPAL"> HOME </a>
+            <a href="{{ path_for('List') }}" title="IR A PAGINA LIST"> LIST </a>
+        </div>
     </div>
 {% endblock %}

@@ -56,14 +56,26 @@ class ctr_user{
 	public function getUserData($idUser){
 		$userClass = new user();
 		$response = new \stdClass();
-
+		
 		$responseGetUserInfo = $userClass->getUserById($idUser);
 		if($responseGetUserInfo->result == 2){
-            $response->result = 2;
+			$response->result = 2;
             $response->usuario = $responseGetUserInfo->objectResult;
             $response->usuario->pass = "";
             $response->usuario->token = "";
         } else return $responseGetUserInfo;
         return $response;
+	}
+	
+	public function getListUsers(){
+		$userClass = new user();
+		$response = new \stdClass();
+		
+		$responseGetUsers = $userClass->getListUsers();
+		if($responseGetUsers->result == 2){
+			$response->result = 2;
+			$response->users = $responseGetUsers->listResult;
+		} else return $responseGetUsers;
+		return $response;
 	}
 }

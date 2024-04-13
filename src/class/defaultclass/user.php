@@ -9,6 +9,11 @@ class user{
 		return $dbClass->sendQuery("UPDATE usuario SET pass = ? WHERE id = ?", array('si', $newPassword, $idUser), "BOOLE");
 	}
 
+	public function getListUsers(){
+		$dbClass = new DataBase();
+		return $dbClass->sendQuery("SELECT * FROM usuario", array(), "LIST");
+	}
+
 	public function setNewTokenAndSession($idUser){
 		$dbClass = new DataBase();
 		$newToken = bin2hex(random_bytes((100 - (100 % 2)) / 2));

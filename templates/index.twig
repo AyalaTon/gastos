@@ -4,9 +4,16 @@
 {% endblock %}
 {% block content %}
     <div class="container">
-        <h1>CONTROL DE GASTOS DEL HOGAR <br>
-        API REST</h1>
-        <img src="{{ path_for('Home') }}img/image.png" />
-        <a href="{{ path_for('Test') }}" title="IR A PAGINA DE TEST"> TEST </a>
+        <div class="h1">
+            <h1>CONTROL DE GASTOS DEL HOGAR <br>
+            API REST</h1>
+        </div>
+        <div class="img" style="text-align:center;">
+            <img src="{{ path_for('Home') }}img/image.png" />
+        </div>
+        <div class="routes" style="display: flex; justify-content: center">
+            <a href="{{ path_for('Test') }}" title="IR A PAGINA DE TEST"> TEST </a>
+            <a href="{{ path_for('List') }}" title="IR A PAGINA LIST"> LIST </a>
+        </div>
     </div>
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.twig" %}
+{% block head %}
+    
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="h1">
+            <h1>CONTROL DE GASTOS DEL HOGAR <br>
+            LIST PAGE</h1>
+        </div>
+        <div class="img" style="text-align:center;">
+            <img src="{{ path_for('Home') }}img/image3.png" />
+        </div>
+        <div class="routes" style="display: flex; justify-content: center">
+            <a href="{{ path_for('Home') }}" title="IR A PAGINA PRINCIPAL"> HOME </a>
+            <a href="{{ path_for('Test') }}" title="IR A PAGINA TEST"> TEST </a>
+        </div>
+        <div class="table">
+            <table style="margin:auto;">
+                <thead>
+                    <th> ID </th>
+                    <th> User </th>
+                    <th> PASSWORD </th>
+                    <th> TOKEN </th>
+                </thead>
+                <tbody>
+            {% for oneItem in users %}
+                <tr id="{{ oneItem['id'] }}"> <td> {{ oneItem['id'] }} </td> <td> {{ oneItem['user'] }} </td> <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"> {{ oneItem['pass'] }} </td> <td style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"> {{ oneItem['token'] }} </td> </tr>
+            {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

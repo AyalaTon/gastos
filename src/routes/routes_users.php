@@ -21,5 +21,13 @@ return function (App $app){
         $args['version'] = '?'.LASTUPDATE;
 		return $this->view->render($response, "test.twig", $args);
 	})->setName("Test");
+
+	$app->get('/list', function ($request, $response, $args) use ($container, $userController) {
+		$responseFunction = $userController->getListUsers();
+		$listUsers = $responseFunction->users;
+		$args['users'] = $listUsers;
+        $args['version'] = '?'.LASTUPDATE;
+		return $this->view->render($response, "list.twig", $args);
+	})->setName("List");
 }
 ?>
