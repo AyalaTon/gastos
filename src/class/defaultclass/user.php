@@ -11,7 +11,7 @@ class user{
 
 	public function getListUsers(){
 		$dbClass = new DataBase();
-		return $dbClass->sendQuery("SELECT * FROM usuario", array(), "LIST");
+		return $dbClass->sendQuery("SELECT * FROM usuario", null, "LIST");
 	}
 
 	public function setNewTokenAndSession($idUser){
