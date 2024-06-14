@@ -1,6 +1,6 @@
 function getSiteURL(){
 	let url = window.location.href;
-	if(url.includes("localhost") || url.includes("gastos.casa"))
+	if(url.includes("localhost"))
 		return '/gastos/public/';
 	else
 		return '/';
