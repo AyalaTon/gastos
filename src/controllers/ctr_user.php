@@ -18,16 +18,29 @@ class ctr_user{
 				if(strcmp($password, $responseGetUser->objectResult->pass) == 0){
 					return $userClass->setNewTokenAndSession($responseGetUser->objectResult->id);
 				} else {
-					$response->result = 0;
+					$response->result = 1;
 					$response->message = "Usuario y contraseña no coinciden por favor vuelva a ingresarlos.";
 				}
 			}
-		}else return $responseGetUser;
+		} else return $responseGetUser;
 
 		return $response;
 	}
 
-	public function validateCurrentSession(){
+	public function signOut(){
+		$usersClass = new user();
+		$response = new \stdClass();
+		$response->result = 1;
+		if(isset($_SESSION['userSession'])){
+			$currentSession = $_SESSION['userSession'];
+			$response = $usersClass->updateToken($currentSession->idUser, null);
+			if($response->result == 2)
+				session_destroy();
+		}
+		return $response;
+	}
+
+	public function validateSession(){
 		$userClass = new user();
 		$response = new \stdClass();
 
@@ -37,7 +50,7 @@ class ctr_user{
 			if($responseGetUser->result == 2){
 				if(strcmp($currentSession->token, $responseGetUser->objectResult->token) == 0){
 					$response->result = 2;
-					$response->currentSession = $currentSession;
+					$response->session = $currentSession;
 				} else {
 					$response->result = 0;
 					$response->message = "La sesión del usuario caducó por favor vuelva a ingresar.";

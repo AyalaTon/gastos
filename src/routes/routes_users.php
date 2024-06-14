@@ -10,6 +10,23 @@ return function (App $app){
 	$container = $app->getContainer();
 	$userController = new ctr_user();
 
+	$app->get('/ingresar', function ($request, $response, $args) use ($container, $userController){
+		$responseValidateSession = $userController->validateSession();
+		if($responseValidateSession->result != 2){
+			$args['version'] = '?'.LASTUPDATE;
+			return $this->view->render($response, "signIn.twig", $args);
+		}
+		return $response->withRedirect($request->getUri()->getBaseUrl());
+	})->setName("SignIn");
+	
+	$app->get('/salir', function ($request, $response, $args) use ($container, $userController){
+		$responseValidateSession = $userController->validateSession();
+		if($responseValidateSession->result == 2){
+			$responseLogout = $userController->signOut();
+		}
+		return $response->withRedirect($request->getUri()->getBaseUrl());
+	})->setName("SignOut");
+
 	$app->post('/signIn', function(Request $request, Response $response) use ($userController){
 		$data = $request->getParams();
 		$user = $data['user'];
@@ -30,4 +47,6 @@ return function (App $app){
 		return $this->view->render($response, "list.twig", $args);
 	})->setName("List");
 }
+
+
 ?>

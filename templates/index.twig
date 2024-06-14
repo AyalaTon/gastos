@@ -3,17 +3,8 @@
     
 {% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="h1">
-            <h1>CONTROL DE GASTOS DEL HOGAR <br>
-            API REST</h1>
-        </div>
-        <div class="img" style="text-align:center;">
-            <img src="{{ path_for('Home') }}img/image.png" />
-        </div>
-        <div class="routes" style="display: flex; justify-content: center">
-            <a href="{{ path_for('Test') }}" title="IR A PAGINA DE TEST"> TEST </a>
-            <a href="{{ path_for('List') }}" title="IR A PAGINA LIST"> LIST </a>
-        </div>
-    </div>
+    <button class="button_float" onclick="openModalNew()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#f2f9f9" d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h5q.425 0 .713.288T11 4t-.288.713T10 5H5v14h14v-5q0-.425.288-.712T20 13t.713.288T21 14v5q0 .825-.587 1.413T19 21zM16 8h-2q-.425 0-.712-.288T13 7t.288-.712T14 6h2V4q0-.425.288-.712T17 3t.713.288T18 4v2h2q.425 0 .713.288T21 7t-.288.713T20 8h-2v2q0 .425-.288.713T17 11t-.712-.288T16 10z"/></svg>
+        {# <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 36 36"><path fill="#1a2c32" d="M34 18A16 16 0 1 1 18 2a16 16 0 0 1 16 16m-8.41-1.5H19.5v-6.09a1.5 1.5 0 0 0-3 0v6.09h-6.09a1.5 1.5 0 0 0 0 3h6.09v6.09a1.5 1.5 0 0 0 3 0V19.5h6.09a1.5 1.5 0 0 0 0-3" class="clr-i-solid clr-i-solid-path-1"/><path fill="none" d="M0 0h36v36H0z"/></svg> #}
+    </button>
 {% endblock %}

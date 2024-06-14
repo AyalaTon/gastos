@@ -1,0 +1,22 @@
+{% extends "base.twig" %}
+{% block head %}
+
+{% endblock %}
+{% block content %}
+<div class="card m-auto mt-4" style="max-width: 500px;">
+    {# <img class="card-img-top" src="{{ path_for('Home') }}img/logo.png" alt="Card image cap"> #}
+    <h1 class="m-4" style="font-size: xxx-large; text-align: center;"> Iniciar Sesión</h1>
+    <div class="card-body">
+        <div class="d-grid gap-2">
+            <label class=""> Usuario </label>
+            <input class="form-control" type="text" id="userInput"/>
+            <label class=""> Contraseña </label>
+            <input class="form-control" type="password" id="passwordInput"/>
+            <button class="btn btn-outline-dark mx-auto col-12 mt-4" type="button" id="btnSignIn" onclick="signIn()" > Ingresar </button>
+        </div>
+    </div>
+</div>
+{% block script %}
+	<script type="text/javascript" src="{{ path_for('Home') }}scripts/signin.js{{ version }}"></script>
+{% endblock %}
+{% endblock %}
