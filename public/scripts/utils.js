@@ -3,7 +3,7 @@ function getSiteURL(){
 	if(url.includes("localhost"))
 		return '/gastos/public/';
 	else
-		return 'http://gastos.casa.byg.uy/';
+		return '/';
 }
 
 
